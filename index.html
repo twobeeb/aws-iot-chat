@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Group Chat</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body ng-app="App" ng-controller="mainController">
+    <h1>Chat</h1>
+    <form>
+        <div id="divLogin" ng-show="!model.connected">
+            <label for="user">Your username :</label>
+            <input type="text" id="user" ng-model="model.userFrom" />
+
+            <br />
+            <label for="user">Target username:</label>
+            <input type="text" id="user" ng-model="model.userTo" />
+            <button type="button" id="connect" ng-click="connect()">Connect!</button>
+        </div>
+        
+    </form>
+    <div ng-show="model.connected">
+        <h2>Past Messages from {{model.userTo}}</h2>
+        <ul>
+            <li ng-repeat="item in model.target.oldMessages">[{{item.date}}] {{item.text}}</li>
+        </ul>
+        <h2>Live Messages</h2>
+        <!--Last PING : {{model.target.timeSinceLastPing}}<br />
+        Last Seen : {{model.target.lastSeen}}-->
+        <div ng-show="model.target.timeSinceLastPing == -1">
+            [{{model.userTo}}] is not online yet.
+        </div>
+        <div ng-show="model.target.timeSinceLastPing > 0 && model.target.timeSinceLastPing <= 10000">
+            <div ng-show="model.target.currentText.length == 0">
+                [{{model.userTo}}] is online, not writing</span>
+            </div>
+            <div ng-show="model.target.currentText.length > 0">
+                [{{model.userTo}}] is writing : {{model.target.currentText}}<span class='blinking-cursor'>|</span>
+            </div>
+        </div>
+        <div ng-show="model.target.timeSinceLastPing > 10000">
+            [{{model.userTo}}] is not online anymore (10 seconds).
+        </div>
+        
+        <div ng-show="model.you.currentText.length == 0">
+            You are not writing.
+        </div>
+        <div ng-show="model.you.currentText.length > 0">
+            [You] are writing : <b>{{model.you.currentText}}</b><span class='blinking-cursor'>|</span>
+        </div>
+        <br />
+        <br />
+        <div id="divChat" ng-show="model.connected">
+            <label for="message">Message to send:</label>
+            <input type="text" id="message" ng-model="model.you.currentText" ng-change="textChanged()" />
+
+            <button type="button" id="send" ng-click="textSend()">send!</button>
+        </div>
+        <h2>Past Messages from you</h2>
+        <ul>
+            <li ng-repeat="item in model.you.oldMessages | orderBy:'-date'">[{{item.date}}] {{item.text}}</li>
+        </ul>
+    </div>
+    <h2>Debug Messages</h2>
+    <ul>
+        <li ng-repeat="item in model.log">{{item}}</li>
+    </ul>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.js"></script>
+    <script src="bundle.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
