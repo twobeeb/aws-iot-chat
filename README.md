@@ -3,9 +3,9 @@ Live Chat using AWS IoT Broker and AngularJS
 
 Author : Julien Chanaud julien.chanaud[at]supinfo.com
 
-Based on https://gist.github.com/stesie/dabc9236ef8fc4123609f9d81df6ccd8
+Based on https://gist.github.com/stesie/dabc9236ef8fc4123609f9d81df6ccd8 by Stefan Siegl
 
-Blinking cursor CSS by Artem Gordinsky : https://codepen.io/ArtemGordinsky/pen/GnLBq
+Blinking cursor CSS https://codepen.io/ArtemGordinsky/pen/GnLBq by Artem Gordinsky
 
 Config
 ======
